@@ -1,0 +1,82 @@
+namespace: hazelcast
+
+
+hazelcast:
+  defines: runnable
+  services:
+    hazelcast:
+      container: hazelcast
+      port: 5701
+      protocol: tcp
+      host-port: 5701
+  metadata:
+    defines: metadata
+    name: hazelcast
+    description: Hazelcast is a distributed computation and storage platform for consistently low-latency querying, aggregation and stateful computation against event streams and traditional data sources
+    tags: self hosted, distributed systems, database
+    website: https://hazelcast.com/
+    source: https://github.com/hazelcast/hazelcast
+    publisher: "monk.io"
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
+  containers:
+    defines: containers
+    hazelcast:
+      image: hazelcast/hazelcast
+      image-tag: <- `${hazelcast-image-tag}`
+      ports:
+        - 5701:5701
+  files:
+    advanced-config:
+      container: hazelcast
+      mode: 0644
+      path: /opt/hazelcast/config/hazelcast-config.yml
+      contents: <<< files/hazelcast-config.yml
+  variables:
+    hz-clustername:
+      env: HZ_CLUSTERNAME
+      value: <- `${cluster-name}`
+      type: string
+    java-opts:
+      env: JAVA_OPTS
+      value: "-Dhazelcast.config=/opt/hazelcast/config/hazelcast-config.yml"
+      type: string
+
+
+hazelcast-management:
+  defines: runnable
+  services:
+    hazelcast-management:
+      container: hazelcast-management
+      port: 8080
+      protocol: tcp
+      host-port: 8080
+  connections:
+    hazelcast:
+      runnable: hazelcast/hazelcast
+      service: hazelcast       
+  metadata:
+    defines: metadata
+    name: hazelcast
+    description: Management Center is a tool for managing and monitoring Hazelcast Platform clusters.
+    tags: self hosted, distributed systems, database
+    website: https://hazelcast.com/
+    source: https://github.com/hazelcast/management-center-docs
+    publisher: "monk.io"
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
+  containers:
+    defines: containers
+    hazelcast-management:
+      image: hazelcast/management-center:latest
+      image-tag: <- `${hazelcast-management-image-tag}`
+      ports:
+        - 8080:8080
+  variables:
+    defines: variables
+    hz-clustername:
+      env: MC_DEFAULT_CLUSTER
+      value: <- `${cluster-name}`
+      type: string
+    hz-cluster-hostname:
+      env: MC_DEFAULT_CLUSTER_MEMBERS
+      value: <- connection-hostname("hazelcast")
+      type: string             
