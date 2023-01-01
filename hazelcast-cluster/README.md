@@ -2,7 +2,6 @@
 
 This repository contains Monk.io template to deploy Hazelcast system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
 
-This template includes Nginx as a reverse proxy  with ELK Stack  out of box.
 
 ## Start
 
@@ -14,14 +13,14 @@ Start `monkd` and login.
 monk login --email=<email> --password=<password>
 ```
 
-## Clone Monk ELK repository
+## Clone Monk Hazelcast repository
 
 In order to load templates and change configuration simply use below commands: 
 ```bash
 git clone https://github.com/monk-io/monk-hazelcast
 
-# and change directory to the monk-elk template folder
-cd monk-hazelcast
+# and change directory to the monk-hazelcast  template folder
+cd monk-hazelcast/hazelcast-cluster
 
 ```
 
@@ -38,9 +37,9 @@ The current variables can be found in `hazelcast/variables` section
     cluster-name: "local-cluster"
 ```
 
-### ELK Stack configuration files
+### Hazelcast Stack configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 4 configuration files which bind to the container while run monk-elk kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There is one configuration files which bind to the container while run monk-hazelcast kit 
 
 
 | Configuration File	 | Format Used | Directory in Container | Purpose 
@@ -59,43 +58,6 @@ You can find configuration files in `/files` directory in repository and can edi
 | **hazelcast-image-tag** | Hazelcast  image version. | string | 5.2.1 |
 | **cluster-name** | Hazelcast cluster name | string | local-cluster
 
-
-
-## Local Deployment
-
-First clone the repository simply run below command after launching `monkd`:
-:
-
-```bash
-➜  monk load MANIFEST
-
-✨ Loaded:
- ├─🔩 Runnables:
- │  ├─🧩 hazelcast/hazelcast
- │  └─🧩 hazelcast/hazelcast-management
- ├─🔗 Process groups:
- │  └─🧩 hazelcast/stack
- └─⚙️ Entity instances:
-    ├─🧩 hazelcast/hazelcast/metadata
-    └─🧩 hazelcast/hazelcast-management/metadata
-✔ All templates loaded successfully
-
-➜  monk list -l elk
-
-✔ Got the list
-Type      Template                        Repository  Version  Tags
-runnable  hazelcast/hazelcast             local       -        self hosted, distributed systems, database
-runnable  hazelcast/hazelcast-management  local       -        self hosted, distributed systems, database
-group     hazelcast/stack                 local       -        -
-
-
-➜   monk run hazelcast/stack
-
-✔ Started local/hazelcast/stack
-
-```
-
-This will start the  Hazelcast with a Hazelcast management center. 
 
 
 ## Cloud Deployment
@@ -143,54 +105,66 @@ Once cluster is ready execute the same command as for local and select your clus
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 hazelcast/hazelcast-management
- │  └─🧩 hazelcast/hazelcast
+ │  ├─🧩 hazelcast-cluster/hazelcast-2
+ │  ├─🧩 hazelcast-cluster/hazelcast-management
+ │  ├─🧩 hazelcast-cluster/hazelcast-common
+ │  ├─🧩 hazelcast-cluster/hazelcast-1
+ │  └─🧩 hazelcast-cluster/hazelcast-3
  ├─🔗 Process groups:
- │  └─🧩 hazelcast/stack
+ │  └─🧩 hazelcast-cluster/stack
  └─⚙️ Entity instances:
-    ├─🧩 hazelcast/hazelcast-management/metadata
-    └─🧩 hazelcast/hazelcast/metadata
+    ├─🧩 hazelcast-cluster/hazelcast-management/metadata
+    └─🧩 hazelcast-cluster/hazelcast-common/metadata
 ✔ All templates loaded successfully
 
-➜  monk list -l hazelcast
+➜  monk list -l hazelcast-cluster
 
 ✔ Got the list
-Type      Template                        Repository  Version  Tags
-runnable  hazelcast/hazelcast             local       -        self hosted, distributed systems, database
-runnable  hazelcast/hazelcast-management  local       -        self hosted, distributed systems, database
-group     hazelcast/stack                 local       -        -
+Type      Template                                Repository  Version  Tags
+runnable  hazelcast-cluster/hazelcast-1           local       -        self hosted, distributed systems, database
+runnable  hazelcast-cluster/hazelcast-2           local       -        self hosted, distributed systems, database
+runnable  hazelcast-cluster/hazelcast-3           local       -        self hosted, distributed systems, database
+runnable  hazelcast-cluster/hazelcast-common      local       -        self hosted, distributed systems, database
+runnable  hazelcast-cluster/hazelcast-management  local       -        self hosted, distributed systems, database
+group     hazelcast-cluster/stack                 local       -        -
 
 
-➜  monk run hazelcast/stack
+➜  monk run hazelcast-cluster/stack
 ? Select tag to run [local/hazelcast/stack] on: hazelcast
 
-✔ Started local/hazelcast/stack
+✔ Started local/hazelcast-cluster/stack
 ```
 
 ## Logs & Shell
 
 ```bash
-# show Elasticsearch logs
-➜  monk logs -l 1000 -f hazelcast/hazelcast
+# show Hazelcast logs
+➜  monk logs -l 1000 -f  hazelcast-cluster/hazelcast-1
+➜  monk logs -l 1000 -f  hazelcast-cluster/hazelcast-2
+➜  monk logs -l 1000 -f  hazelcast-cluster/hazelcast-3
 
-# show Kibana logs
-➜  monk logs -l 1000 -f hazelcast/hazelcast-management
+# show Hazelcast management logs
+➜  monk logs -l 1000 -f hazelcast-cluster/hazelcast-management
 
 
-# access shell in the container running Hazelcast
-➜  monk shell hazelcast/hazelcast
+# access shell in the container running Hazelcast members
+➜  monk shell hazelcast-cluster/hazelcast-1
+➜  monk shell hazelcast-cluster/hazelcast-2
+➜  monk shell hazelcast-cluster/hazelcast-3
 
 # access shell in the container running Hazelcast management
-➜  monk shell hazelcast/hazelcast-management
+➜  monk shell hazelcast-cluster/hazelcast-management
 
 ```
 
 ## Stop, remove and clean up workloads and templates
 
 ```bash
-➜ monk purge  --ii --rv --rs --no-confirm --rv --rs  hazelcast/hazelcast hazelcast/hazelcast-management hazelcast/stack
+➜ monk purge  --ii --rv --rs --no-confirm --rv --rs  hazelcast-cluster/hazelcast-1 hazelcast-cluster/hazelcast-2 hazelcast-cluster/hazelcast-3 hazelcast-cluster/hazelcast-management hazelcast-cluster/stack
 
-✔ hazelcast/hazelcast purged
-✔ hazelcast/hazelcast-management purged
-✔ hazelcast/stack purged
+✔ hazelcast-cluster/hazelcast-1 purged
+✔ hazelcast-cluster/hazelcast-2 purged
+✔ hazelcast-cluster/hazelcast-3 purged
+✔ hazelcast-cluster/hazelcast-management purged
+✔ hazelcast-cluster/stack purged
 ```

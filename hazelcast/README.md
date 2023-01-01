@@ -2,7 +2,6 @@
 
 This repository contains Monk.io template to deploy Hazelcast system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
 
-This template includes Nginx as a reverse proxy  with ELK Stack  out of box.
 
 ## Start
 
@@ -14,14 +13,14 @@ Start `monkd` and login.
 monk login --email=<email> --password=<password>
 ```
 
-## Clone Monk ELK repository
+## Clone Monk Hazelcast repository
 
 In order to load templates and change configuration simply use below commands: 
 ```bash
 git clone https://github.com/monk-io/monk-hazelcast
 
-# and change directory to the monk-elk template folder
-cd monk-hazelcast
+# and change directory to the monk-hazelcast  template folder
+cd monk-hazelcast/hazelcast
 
 ```
 
@@ -38,9 +37,9 @@ The current variables can be found in `hazelcast/variables` section
     cluster-name: "local-cluster"
 ```
 
-### ELK Stack configuration files
+### Hazelcast Stack configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 4 configuration files which bind to the container while run monk-elk kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There is one configuration files which bind to the container while run monk-hazelcast kit 
 
 
 | Configuration File	 | Format Used | Directory in Container | Purpose 
@@ -80,7 +79,7 @@ First clone the repository simply run below command after launching `monkd`:
     └─🧩 hazelcast/hazelcast-management/metadata
 ✔ All templates loaded successfully
 
-➜  monk list -l elk
+➜  monk list -l hazelcast
 
 ✔ Got the list
 Type      Template                        Repository  Version  Tags
