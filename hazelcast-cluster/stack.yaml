@@ -1,0 +1,18 @@
+namespace: hazelcast-cluster
+
+stack:
+  defines: process-group
+  runnable-list:
+    - hazelcast-cluster/hazelcast-1
+    - hazelcast-cluster/hazelcast-2
+    - hazelcast-cluster/hazelcast-3
+    - hazelcast-cluster/hazelcast-management
+  variables:
+    hazelcast-management-image-tag: "latest"
+    hazelcast-image-tag: "5.2.1"
+    cluster-name: "hazelcast-cluster"
+
+
+
+
+

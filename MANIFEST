@@ -1,3 +1,2 @@
-REPO monk-hazelcast
-LOAD hazelcast.yaml stack.yaml
-RESOURCES files/hazelcast-config.yml
+REPO monk-mattermost
+DIR hazelcast hazelcast-cluster
