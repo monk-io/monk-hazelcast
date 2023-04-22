@@ -2,10 +2,9 @@
 
 This repository contains Monk.io template to deploy Hazelcast system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
 
-
 ## Start
 
-Set up Monk - https://docs.monk.io/docs/monk-in-10/
+[Set up Monk](https://docs.monk.io/docs/monk-in-10/)
 
 Start `monkd` and login.
 
@@ -15,7 +14,8 @@ monk login --email=<email> --password=<password>
 
 ## Clone Monk Hazelcast repository
 
-In order to load templates and change configuration simply use below commands: 
+In order to load templates and change configuration simply use below commands:
+
 ```bash
 git clone https://github.com/monk-io/monk-hazelcast
 
@@ -39,26 +39,19 @@ The current variables can be found in `hazelcast/variables` section
 
 ### Hazelcast Stack configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There is one configuration files which bind to the container while run monk-hazelcast kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There is one configuration files which bind to the container while run monk-hazelcast kit
 
+| Configuration File       | Format Used | Directory in Container                       | Purpose                                  |
+| ------------------------ | ----------- | -------------------------------------------- | ---------------------------------------- |
+| **hazelcast-config.yml** | yaml        | `/opt/hazelcast/config/hazelcast-config.yml` | Primary configuration file for Hazelcast |
 
-| Configuration File	 | Format Used | Directory in Container | Purpose 
-|----------|-------------|------|---------|
-| **hazelcast-config.yml** | yaml | `/opt/hazelcast/config/hazelcast-config.yml` | Primary configuration file for Hazelcast
+## Template variables
 
-
-
-
-
-##  Template variables
-
-| Variable | Description | Type | Example |
-|----------|-------------|------|---------|
-| **hazelcast-management-image-tag** | Hazelcast management image version. | string | latest |
-| **hazelcast-image-tag** | Hazelcast  image version. | string | 5.2.1 |
-| **cluster-name** | Hazelcast cluster name | string | local-cluster
-
-
+| Variable                           | Description                         | Type   | Example       |
+| ---------------------------------- | ----------------------------------- | ------ | ------------- |
+| **hazelcast-management-image-tag** | Hazelcast management image version. | string | latest        |
+| **hazelcast-image-tag**            | Hazelcast  image version.           | string | 5.2.1         |
+| **cluster-name**                   | Hazelcast cluster name              | string | local-cluster |
 
 ## Cloud Deployment
 
@@ -100,6 +93,7 @@ Your cluster has been created successfully.
 ```
 
 Once cluster is ready execute the same command as for local and select your cluster (the option will appear automatically).
+
 ```bash
 ➜  monk load MANIFEST
 

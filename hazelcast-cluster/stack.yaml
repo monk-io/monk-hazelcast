@@ -8,11 +8,6 @@ stack:
     - hazelcast-cluster/hazelcast-3
     - hazelcast-cluster/hazelcast-management
   variables:
-    hazelcast-management-image-tag: "latest"
-    hazelcast-image-tag: "5.2.1"
-    cluster-name: "hazelcast-cluster"
-
-
-
-
-
+    hazelcast-management-image-tag: latest
+    hazelcast-image-tag: 5.2.1
+    cluster-name: hazelcast-cluster

@@ -1,6 +1,5 @@
 namespace: hazelcast
 
-
 hazelcast:
   defines: runnable
   services:
@@ -14,14 +13,12 @@ hazelcast:
     name: hazelcast
     description: |
       Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
-      
       It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
-      
       Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
     tags: self hosted, distributed systems, database
     website: https://hazelcast.com/
     source: https://github.com/hazelcast/hazelcast
-    publisher: "monk.io"
+    publisher: monk.io
     icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
     defines: containers
@@ -43,9 +40,8 @@ hazelcast:
       type: string
     java-opts:
       env: JAVA_OPTS
-      value: "-Dhazelcast.config=/opt/hazelcast/config/hazelcast-config.yml"
+      value: -Dhazelcast.config=/opt/hazelcast/config/hazelcast-config.yml
       type: string
-
 
 hazelcast-management:
   defines: runnable
@@ -58,18 +54,18 @@ hazelcast-management:
   connections:
     hazelcast:
       runnable: hazelcast/hazelcast
-      service: hazelcast       
+      service: hazelcast
   metadata:
     defines: metadata
     name: hazelcast
-    description: | 
-       Hazelcast Management Center is a web-based monitoring and management tool provided by Hazelcast for managing and monitoring Hazelcast clusters. 
-       
-       It provides a centralized, graphical user interface (GUI) for monitoring and managing distributed data grids deployed across multiple nodes or clusters.
+    description: |
+      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
+      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
+      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
     tags: self hosted, distributed systems, database
     website: https://hazelcast.com/
     source: https://github.com/hazelcast/management-center-docs
-    publisher: "monk.io"
+    publisher: monk.io
     icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
     defines: containers
@@ -87,4 +83,4 @@ hazelcast-management:
     hz-cluster-hostname:
       env: MC_DEFAULT_CLUSTER_MEMBERS
       value: <- connection-hostname("hazelcast")
-      type: string             
+      type: string
