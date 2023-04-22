@@ -21,7 +21,6 @@ hazelcast:
     publisher: monk.io
     icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
-    defines: containers
     hazelcast:
       image: hazelcast/hazelcast
       image-tag: <- `${hazelcast-image-tag}`
@@ -66,12 +65,10 @@ hazelcast-management:
     publisher: monk.io
     icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
-    defines: containers
     hazelcast-management:
-      image: hazelcast/management-center:latest
+      image: hazelcast/management-center
       image-tag: <- `${hazelcast-management-image-tag}`
   variables:
-    defines: variables
     hz-clustername:
       env: MC_DEFAULT_CLUSTER
       value: <- `${cluster-name}`

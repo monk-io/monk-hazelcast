@@ -154,7 +154,7 @@ group     hazelcast-cluster/stack                 local       -        -
 ## Stop, remove and clean up workloads and templates
 
 ```bash
-➜ monk purge  --ii --rv --rs --no-confirm --rv --rs  hazelcast-cluster/hazelcast-1 hazelcast-cluster/hazelcast-2 hazelcast-cluster/hazelcast-3 hazelcast-cluster/hazelcast-management hazelcast-cluster/stack
+➜ monk purge  --ii --rv --rs --no-confirm  hazelcast-cluster/hazelcast-1 hazelcast-cluster/hazelcast-2 hazelcast-cluster/hazelcast-3 hazelcast-cluster/hazelcast-management hazelcast-cluster/stack
 
 ✔ hazelcast-cluster/hazelcast-1 purged
 ✔ hazelcast-cluster/hazelcast-2 purged
