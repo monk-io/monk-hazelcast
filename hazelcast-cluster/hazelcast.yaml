@@ -65,6 +65,8 @@ hazelcast-common:
 hazelcast-1:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
+  metadata:
+    private: true  
   variables:
     connection-hostname:
       type: string
@@ -73,6 +75,8 @@ hazelcast-1:
 hazelcast-2:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
+  metadata:
+    private: true  
   variables:
     connection-hostname:
       type: string
@@ -81,6 +85,8 @@ hazelcast-2:
 hazelcast-3:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
+  metadata:
+    private: true  
   variables:
     connection-hostname:
       type: string
@@ -109,7 +115,6 @@ hazelcast-management:
     name: hazelcast
     description: |
       Hazelcast Management Center is a web-based monitoring and management tool provided by Hazelcast for managing and monitoring Hazelcast clusters. 
-      
       It provides a centralized, graphical user interface (GUI) for monitoring and managing distributed data grids deployed across multiple nodes or clusters.
     tags: self hosted, distributed systems, database
     website: https://hazelcast.com/
