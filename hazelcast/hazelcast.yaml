@@ -9,13 +9,13 @@ hazelcast:
       protocol: tcp
       host-port: 5701
   metadata:
-    defines: metadata
     name: hazelcast
+    shortname: Hazelcast
     description: |
       Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
       It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
       Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
-    tags: self hosted, distributed systems, database
+    tags: self hosted, distributed systems, NoSQL database, In-memory data grid, Replication and synchronization
     website: https://hazelcast.com/
     source: https://github.com/hazelcast/hazelcast
     publisher: monk.io
@@ -25,8 +25,6 @@ hazelcast:
     hazelcast:
       image: hazelcast/hazelcast
       image-tag: <- `${hazelcast-image-tag}`
-      ports:
-        - 5701:5701
   files:
     advanced-config:
       container: hazelcast
@@ -56,13 +54,13 @@ hazelcast-management:
       runnable: hazelcast/hazelcast
       service: hazelcast
   metadata:
-    defines: metadata
+    shortname: Hazelcast Management
     name: hazelcast
     description: |
       Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
       It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
       Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
-    tags: self hosted, distributed systems, database
+    tags: Web UI, Database Management
     website: https://hazelcast.com/
     source: https://github.com/hazelcast/management-center-docs
     publisher: monk.io
@@ -72,8 +70,6 @@ hazelcast-management:
     hazelcast-management:
       image: hazelcast/management-center:latest
       image-tag: <- `${hazelcast-management-image-tag}`
-      ports:
-        - 8080:8080
   variables:
     defines: variables
     hz-clustername:

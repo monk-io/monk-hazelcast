@@ -47,7 +47,7 @@ You can find configuration files in `/files` directory in repository and can edi
 
 ## Template variables
 
-| Variable                           | Description                         | Type   | Example       |
+| Variable                           | Description                         | Type   | Defaults      |
 | ---------------------------------- | ----------------------------------- | ------ | ------------- |
 | **hazelcast-management-image-tag** | Hazelcast management image version. | string | latest        |
 | **hazelcast-image-tag**            | Hazelcast  image version.           | string | 5.2.1         |
