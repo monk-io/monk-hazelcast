@@ -19,17 +19,7 @@ hazelcast-common:
       runnable: hazelcast-cluster/hazelcast-3
       service: hazelcast
   metadata:
-    name: hazelcast
-    shortname: Hazelcast
-    description: |
-      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
-      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
-      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
-    tags: self hosted, distributed systems, NoSQL database, In-memory data grid, Replication and synchronization
-    website: https://hazelcast.com/
-    source: https://github.com/hazelcast/hazelcast
-    publisher: monk.io
-    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
+    private: true
   containers:
     hazelcast:
       image: hazelcast/hazelcast
@@ -63,7 +53,7 @@ hazelcast-1:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
   metadata:
-    private: true  
+    private: true
   variables:
     connection-hostname:
       type: string
@@ -73,7 +63,7 @@ hazelcast-2:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
   metadata:
-    private: true  
+    private: true
   variables:
     connection-hostname:
       type: string
@@ -83,7 +73,7 @@ hazelcast-3:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
   metadata:
-    private: true  
+    private: true
   variables:
     connection-hostname:
       type: string
@@ -108,16 +98,7 @@ hazelcast-management:
       runnable: hazelcast-cluster/hazelcast-3
       service: hazelcast
   metadata:
-    name: hazelcast
-    shortname: Hazelcast Management
-    description: |
-      Hazelcast Management Center is a web-based monitoring and management tool provided by Hazelcast for managing and monitoring Hazelcast clusters. 
-      It provides a centralized, graphical user interface (GUI) for monitoring and managing distributed data grids deployed across multiple nodes or clusters.
-    tags: Web UI, Database Management
-    website: https://hazelcast.com/
-    source: https://github.com/hazelcast/management-center-docs
-    publisher: monk.io
-    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
+    private: true
   containers:
     hazelcast-management:
       image: hazelcast/management-center

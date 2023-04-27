@@ -2,24 +2,14 @@ namespace: hazelcast
 
 hazelcast:
   defines: runnable
+  metadata:
+    private: true
   services:
     hazelcast:
       container: hazelcast
       port: 5701
       protocol: tcp
       host-port: 5701
-  metadata:
-    name: hazelcast
-    shortname: Hazelcast
-    description: |
-      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
-      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
-      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
-    tags: self hosted, distributed systems, NoSQL database, In-memory data grid, Replication and synchronization
-    website: https://hazelcast.com/
-    source: https://github.com/hazelcast/hazelcast
-    publisher: monk.io
-    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
     hazelcast:
       image: hazelcast/hazelcast
@@ -53,17 +43,7 @@ hazelcast-management:
       runnable: hazelcast/hazelcast
       service: hazelcast
   metadata:
-    shortname: Hazelcast Management
-    name: hazelcast
-    description: |
-      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities. 
-      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel. 
-      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
-    tags: Web UI, Database Management
-    website: https://hazelcast.com/
-    source: https://github.com/hazelcast/management-center-docs
-    publisher: monk.io
-    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
+    private: true
   containers:
     hazelcast-management:
       image: hazelcast/management-center
