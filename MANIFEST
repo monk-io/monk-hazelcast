@@ -1,2 +1,2 @@
-REPO monk-mattermost
+REPO monk-hazelcast
 DIR hazelcast hazelcast-cluster
