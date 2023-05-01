@@ -8,7 +8,6 @@ hazelcast-common:
       container: hazelcast
       port: 5701
       protocol: tcp
-      host-port: 5701
   connections:
     hazelcast-1:
       runnable: hazelcast-cluster/hazelcast-1

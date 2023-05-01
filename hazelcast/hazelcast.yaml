@@ -10,7 +10,6 @@ hazelcast:
       container: hazelcast
       port: 5701
       protocol: tcp
-      host-port: 5701
   containers:
     hazelcast:
       image: hazelcast/hazelcast
