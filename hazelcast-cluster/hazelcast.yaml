@@ -23,7 +23,7 @@ hazelcast-common:
   containers:
     hazelcast:
       image: hazelcast/hazelcast
-      image-tag: <- `${hazelcast-image-tag}`
+      image-tag: <- `${hz-image-tag}`
   files:
     advanced-config:
       container: hazelcast
@@ -33,12 +33,15 @@ hazelcast-common:
   variables:
     hz-clustername:
       env: HZ_CLUSTERNAME
-      value: <- `${cluster-name}`
+      value: <- $cluster-name default("hazelcast-cluster")
       type: string
     java-opts:
       env: JAVA_OPTS
       value: -Dhazelcast.config=/opt/hazelcast/config/hazelcast-config.yml
       type: string
+    hz-image-tag:
+      value: <- $hazelcast-image-tag default("5.2.1")
+      type: string      
     member1-hostname:
       type: string
       value: <- connection-hostname("hazelcast-1")
@@ -52,9 +55,6 @@ hazelcast-common:
 hazelcast-1:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
-  containers:
-    hazelcast:
-      bash: 'sleep 99999'
   metadata:
     private: true
   variables:
@@ -105,11 +105,14 @@ hazelcast-management:
   containers:
     hazelcast-management:
       image: hazelcast/management-center
-      image-tag: <- `${hazelcast-management-image-tag}`     
+      image-tag: <- `${hzmgmt-image-tag}`
   variables:
+    hzmgmt-image-tag:
+      value: <- $hazelcast-management-image-tag default("latest")
+      type: string   
     hz-clustername:
       env: MC_DEFAULT_CLUSTER
-      value: <- `${cluster-name}`
+      value: <- $cluster-name default("hazelcast-cluster")
       type: string
     hz-cluster-hostname:
       env: MC_DEFAULT_CLUSTER_MEMBERS
