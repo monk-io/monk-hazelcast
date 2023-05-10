@@ -52,6 +52,9 @@ hazelcast-common:
 hazelcast-1:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
+  containers:
+    hazelcast:
+      bash: 'sleep 99999'
   metadata:
     private: true
   variables:
@@ -102,7 +105,7 @@ hazelcast-management:
   containers:
     hazelcast-management:
       image: hazelcast/management-center
-      image-tag: <- `${hazelcast-management-image-tag}`
+      image-tag: <- `${hazelcast-management-image-tag}`     
   variables:
     hz-clustername:
       env: MC_DEFAULT_CLUSTER
