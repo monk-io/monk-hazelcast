@@ -55,9 +55,6 @@ hazelcast-common:
 hazelcast-1:
   defines: runnable
   inherits: hazelcast-cluster/hazelcast-common
-  containers:
-    hazelcast:
-      bash: 'sleep 99999'
   metadata:
     private: true
   variables:
