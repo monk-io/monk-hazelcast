@@ -20,6 +20,17 @@ hazelcast-common:
       service: hazelcast
   metadata:
     private: true
+    name: hazelcast
+    shortname: Hazelcast
+    description: |
+      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities.
+      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel.
+      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
+    tags: replication and synchronization, self hosted, nosql database, in-memory data grid
+    website: https://hazelcast.com/
+    source: https://github.com/hazelcast/hazelcast
+    publisher: monk.io
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
     hazelcast:
       image: hazelcast/hazelcast
@@ -41,7 +52,7 @@ hazelcast-common:
       type: string
     hz-image-tag:
       value: <- $hazelcast-image-tag default("5.2.1")
-      type: string      
+      type: string
     member1-hostname:
       type: string
       value: <- connection-hostname("hazelcast-1")
@@ -101,7 +112,17 @@ hazelcast-management:
       runnable: hazelcast-cluster/hazelcast-3
       service: hazelcast
   metadata:
-    private: true
+    name: hazelcast
+    shortname: Hazelcast
+    description: |
+      Hazelcast is an open-source, distributed, in-memory data grid (IMDG) solution that provides highly scalable and fault-tolerant data processing capabilities.
+      It is designed to distribute data across multiple nodes in a cluster, allowing applications to easily scale horizontally and process large amounts of data in parallel.
+      Hazelcast provides distributed data structures and APIs for caching, distributed computing, event processing, and messaging, making it suitable for a wide range of use cases, including caching, real-time analytics, financial services, gaming, e-commerce, and more.
+    tags: replication and synchronization, self hosted, nosql database, in-memory data grid
+    website: https://hazelcast.com/
+    source: https://github.com/hazelcast/hazelcast
+    publisher: monk.io
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuuCdurGuGFoZOMtq833yOm6bBc4halKidOw6vrhSoF8VW2BBFxEZ4-3PowWsjpG39_lM&usqp=CAU
   containers:
     hazelcast-management:
       image: hazelcast/management-center
@@ -109,7 +130,7 @@ hazelcast-management:
   variables:
     hzmgmt-image-tag:
       value: <- $hazelcast-management-image-tag default("latest")
-      type: string   
+      type: string
     hz-clustername:
       env: MC_DEFAULT_CLUSTER
       value: <- $cluster-name default("hazelcast-cluster")
