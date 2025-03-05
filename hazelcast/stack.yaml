@@ -20,5 +20,5 @@ stack:
     - hazelcast/hazelcast-management
   variables:
     hazelcast-management-image-tag: latest
-    hazelcast-image-tag: 5.2.1
+    hazelcast-image-tag: 5.3
     cluster-name: local-cluster
