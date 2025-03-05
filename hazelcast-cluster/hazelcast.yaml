@@ -51,7 +51,7 @@ hazelcast-common:
       value: -Dhazelcast.config=/opt/hazelcast/config/hazelcast-config.yml
       type: string
     hz-image-tag:
-      value: <- $hazelcast-image-tag default("5.2.1")
+      value: <- $hazelcast-image-tag default("5.3")
       type: string
     member1-hostname:
       type: string
