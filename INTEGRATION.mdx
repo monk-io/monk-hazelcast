@@ -1,0 +1,219 @@
+---
+title: Hazelcast
+description: Ready-to-run Hazelcast container templates you can run directly or inherit to integrate an in-memory data grid into your applications.
+primary_category: cache
+tags: [hazelcast, cache, in-memory, distributed, template, runnable, cluster, data-grid]
+integration_type: template
+hosting_models: [self-hosted]
+website_url: https://hazelcast.com/
+docs_url: https://docs.hazelcast.com/
+publisher: monk.io
+---
+
+## Overview
+
+This template provides production‑ready Hazelcast instances as Monk runnables. You can:
+
+- Run it directly to get a managed Hazelcast container with sensible defaults
+- Inherit it in your own runnable to seamlessly add distributed in-memory data grid capabilities to your stack
+- Deploy as a single instance or multi-node cluster with optional management center
+
+Hazelcast is an open-source distributed in-memory data grid (IMDG) that provides highly scalable and fault-tolerant data processing capabilities. It enables distributed caching, distributed computing, event processing, and real-time stream processing for applications requiring high-performance data operations.
+
+## What this template manages
+
+- Hazelcast container (`hazelcast/hazelcast` image, configurable tag)
+- Network service on port 5701 (cluster communication)
+- Cluster coordination and automatic member discovery
+- Optional Management Center UI on port 8080
+- Custom configuration via YAML file mounting
+
+## Available templates
+
+- **hazelcast/hazelcast** - Single Hazelcast instance
+- **hazelcast/hazelcast-management** - Management Center dashboard
+- **hazelcast/stack** - Single instance + Management Center
+- **hazelcast-cluster/hazelcast-1/2/3** - Individual cluster nodes
+- **hazelcast-cluster/hazelcast-management** - Cluster management dashboard
+- **hazelcast-cluster/stack** - 3-node cluster + Management Center
+
+## Quick start (run directly)
+
+1) Load templates
+
+```bash
+monk load MANIFEST
+```
+
+2) Run Hazelcast
+
+```bash
+# Single instance only
+monk run hazelcast/hazelcast
+
+# Single instance with Management Center
+monk run hazelcast/stack
+
+# Or 3-node cluster with Management Center
+monk run hazelcast-cluster/stack
+```
+
+3) Access Management Center
+
+Once started with a stack, access the Management Center at `http://localhost:8080` to monitor your cluster, view statistics, and manage data structures.
+
+## Configuration
+
+Key variables you can customize in this template:
+
+```yaml
+variables:
+  hazelcast-image-tag: "5.2.1"           # Hazelcast container image tag
+  hazelcast-management-image-tag: "latest" # Management Center image tag
+  cluster-name: "local-cluster"          # Cluster name (env: HZ_CLUSTERNAME)
+```
+
+The Hazelcast configuration is managed through a custom YAML file mounted at `/opt/hazelcast/config/hazelcast-config.yml`. You can modify `files/hazelcast-config.yml` in the template directory to customize cluster settings, networking, data structures, and more.
+
+## Use by inheritance (recommended for apps)
+
+Inherit the Hazelcast runnable in your application and declare a connection. Example:
+
+```yaml
+namespace: myapp
+
+cache:
+  defines: runnable
+  inherits: hazelcast/hazelcast
+  variables:
+    cluster-name: myapp-cache-cluster
+
+api:
+  defines: runnable
+  containers:
+    api:
+      image: myorg/api
+      environment:
+        - HAZELCAST_HOST=<- connection-hostname("hazelcast-cache")
+        - HAZELCAST_PORT=5701
+        - HAZELCAST_CLUSTER=<- $cache-cluster-name
+  connections:
+    hazelcast-cache:
+      runnable: cache
+      service: hazelcast
+  variables:
+    cache-cluster-name:
+      value: myapp-cache-cluster
+      type: string
+```
+
+Then run your app group:
+
+```bash
+monk run myapp/api
+```
+
+Your application will automatically resolve the Hazelcast hostname via the connection and can connect using the Hazelcast client library.
+
+## Using the cluster template
+
+For production environments requiring high availability and better performance, inherit from the cluster template:
+
+```yaml
+namespace: myapp
+
+cache-cluster:
+  defines: process-group
+  runnable-list:
+    - myapp/cache-node-1
+    - myapp/cache-node-2
+    - myapp/cache-node-3
+
+cache-node-1:
+  defines: runnable
+  inherits: hazelcast-cluster/hazelcast-common
+  variables:
+    cluster-name: myapp-production
+
+cache-node-2:
+  defines: runnable
+  inherits: hazelcast-cluster/hazelcast-common
+  variables:
+    cluster-name: myapp-production
+
+cache-node-3:
+  defines: runnable
+  inherits: hazelcast-cluster/hazelcast-common
+  variables:
+    cluster-name: myapp-production
+```
+
+## Ports and connectivity
+
+- Service: `hazelcast` on TCP port `5701` (cluster member communication)
+- Management Center: `hazelcast-management` on TCP port `8080` (HTTP UI)
+- From other runnables in the same process group, use `connection-hostname("<connection-name>")` to resolve the Hazelcast host.
+
+## Configuration customization
+
+The template includes a pre-configured `hazelcast-config.yml` file that you can customize for your needs. The configuration file supports:
+
+- Network settings and member discovery
+- Data structure configurations (maps, queues, topics, etc.)
+- Serialization settings
+- Security configurations
+- Persistence options
+- WAN replication settings
+
+To customize, edit `files/hazelcast-config.yml` in the template directory before loading.
+
+## Features
+
+- **Distributed caching**: Store data across multiple nodes with automatic partitioning
+- **In-memory computing**: Execute distributed tasks and aggregations
+- **Event-driven architecture**: Pub/sub messaging with topics and reliable queues
+- **CP and AP modes**: Choose between consistency or availability based on your needs
+- **Client-server topology**: Connect multiple applications to the same cluster
+- **Automatic data partitioning**: Data is automatically distributed across cluster members
+- **Fault tolerance**: Data replication ensures availability during node failures
+- **Dynamic scaling**: Add or remove nodes without downtime
+
+## Management Center features
+
+The included Management Center provides:
+
+- Real-time cluster monitoring and health checks
+- Performance metrics and statistics
+- Data structure browser and management
+- Query console for map entries
+- Member management and monitoring
+- WAN replication monitoring
+- Configuration management
+
+## Related templates
+
+- Combine with `redis/` for complementary caching strategies
+- Use with `prometheus-grafana/` for advanced metrics and observability
+- Integrate with `kafka/` for event streaming pipelines
+
+## Troubleshooting
+
+- If cluster members aren't discovering each other, verify the `cluster-name` is identical across all nodes and check network connectivity.
+- For connection issues from client applications, ensure the service port 5701 is accessible and the Hazelcast client library version is compatible with the server version.
+- Management Center connection issues: verify the cluster name matches and member hostnames are resolvable.
+- Check logs for detailed error messages:
+
+```bash
+# Single instance
+monk logs -l 500 -f hazelcast/hazelcast
+
+# Cluster nodes
+monk logs -l 500 -f hazelcast-cluster/hazelcast-1
+monk logs -l 500 -f hazelcast-cluster/hazelcast-2
+monk logs -l 500 -f hazelcast-cluster/hazelcast-3
+
+# Management Center
+monk logs -l 500 -f hazelcast/hazelcast-management
+```
+
+- For performance tuning, adjust JVM options via the `JAVA_OPTS` environment variable in the template configuration.
